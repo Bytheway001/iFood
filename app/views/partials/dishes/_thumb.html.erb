@@ -1,0 +1,15 @@
+<div class="thumbnail dish-thumbnail" onclick='pedir("<%=dish.id %>")'>
+	<div class="container-fluid">
+		<div class="row" style='height:100px'>
+			<div class="col-xs-3 tn-image">
+				<%= image_tag dish.photo(:thumb) %>
+			</div>
+			<div class="col-xs-9 tn-body">
+				<div class="caption">
+					<p class='restaurant-title'><%= dish.nombre %><span class='pull-right'><%= dish.precio %></span></p>
+					<p class='restaurant-text'><%= dish.descripcion %></p>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

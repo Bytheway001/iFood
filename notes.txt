@@ -1,0 +1,3 @@
+- Drag and drop image
+- Ampliar imagen del plato
+- Mis ordenes como usuario

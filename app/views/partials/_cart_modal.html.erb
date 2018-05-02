@@ -1,0 +1,44 @@
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<h4 class="modal-title" id="myModalLabel"><%= @dish.nombre %></h4>
+</div>
+<div class='row'>
+	<div class="modal-body">
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="form-group">
+					<label for="">Cantidad:</label>
+					<input type='number' min='1' id='detail-qty' value='1' class='form-control' data-dish-id='<%= @dish.id %>' data-attribute='qty'>
+				</div>
+				<div class="form-group">
+					<label for="">Precio:</label>
+					<input type='price' id='detail-price' value='<%=@dish.precio %>' class='form-control' data-attribute='price' readonly>
+				</div>
+				<div class="form-group">
+					<label for="">Observaciones:</label>
+					<textarea id='detail-comment' class='form-control' data-attribute='comments'></textarea>
+				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-sm-12">
+				
+				<% @dish.addons.each do |addon| %>
+				<div class="col-sm-3">
+					<div class="list-group-item"><input type="checkbox" data-name='<%=addon.ingredient.nombre %>' data-id='<%=addon.id %>' data-price='<%=addon.price %>'>
+						<%=addon.ingredient.nombre %> R$( <%=addon.price%> )
+					</div>				
+				</div>
+				<% end %>
+
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<p class='text-left'>Precio Total: <span id='totalprice'>0</span></p>
+	<div class="btn-group">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+		<button type="button" onclick='addToCart(detail)' class="btn btn-primary">Agregar al carrito</button>
+	</div>
+</div>

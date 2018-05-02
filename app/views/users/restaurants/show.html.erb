@@ -1,0 +1,37 @@
+<div class="container">
+	<h1><%= @restaurant.nombre %></h1>
+	<div class="restaurant-image" >
+		<img id="img" onclick="alert('holi');$('#file-input').trigger('click')" src="<%= @restaurant.logo(:thumb) %>"width='100px' height='100px'>
+			
+		</img>
+	</div>
+	
+	<div class="row">
+		<div class="col-sm-4">
+			<h3>Datos</h3>
+			<%= render 'form' %>
+		</div>
+		<div class="col-sm-4">
+			<h3>Menú <%= link_to 'Crear nuevo plato', new_users_restaurant_dish_path(@restaurant),:class=>'btn btn-info btn-sm pull-right' %></h3>
+			
+			<table class="table table-bordered">
+				<tr><th>Nombre</th><th>Precio</th><th>Descripcion</th><th colspan='2'></th></tr>
+				<% @restaurant.dishes.each do |d| %>
+				<tr>
+					<td><%= d.nombre %></td>
+					<td><%= d.precio %></td>
+					<td><%= d.descripcion %></td>
+					<td><%= link_to "<span class='glyphicon glyphicon-pencil'></span>".html_safe,edit_users_restaurant_dish_path(@restaurant,d) %></td>
+					<td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe,users_restaurant_dish_path(@restaurant,d),:method=>:delete %></td>
+				</tr>
+				<% end %>
+			</table>
+			
+
+		</div>
+		<div class="col-sm-4">
+			<div id="map"></div>
+		</div>
+	</div>
+</div>
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyCWnQgHanCgGlxJ5vGHKoHywQUCq8Yum9A&callback=initMap&libraries=places"></script>

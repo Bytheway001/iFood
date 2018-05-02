@@ -1,0 +1,21 @@
+<div class="col-xs-12 col-sm-6 col-md-4">
+	<div class="thumbnail res-thumbnail">
+		<div class="container-fluid">
+		<div class="row" style='height:100px'>
+			<div class="col-xs-3 tn-image">
+				<%= image_tag res.logo(:medium)%>
+			</div>
+			<div class="col-xs-9 tn-body">
+				<div class="caption">
+					<p class='restaurant-title'><%= res.nombre %></p>
+					<% (1..res.quality.to_i.round).each do |i| %>
+					<span class='pull-right glyphicon glyphicon-star'></span>
+					<% end %>
+					<p class='restaurant-text'><%= res.direccion[0..30].gsub(/\s\w+\s*$/, '...') %></p>
+					<%=link_to 'Comer aqui',restaurant_path(res),:class=>"btn btn-primary btn-xs res-button" %>
+				</div>
+			</div>
+		</div>
+		</div>
+	</div>
+</div>

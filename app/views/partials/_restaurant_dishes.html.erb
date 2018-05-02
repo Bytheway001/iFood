@@ -1,0 +1,12 @@
+<table class="table table-bordered">
+		<tr><th>Nombre</th><th>Precio</th><th>Descripcion</th><th colspan='2'></th></tr>
+		<% @restaurant.dishes.each do |d| %>
+		<tr>
+			<td><%= d.nombre %></td>
+			<td><%= d.precio %></td>
+			<td><%= d.descripcion %></td>
+			<td><%= link_to "<span class='glyphicon glyphicon-eye-open'></span>".html_safe,'/' %></td>
+			<td><%= link_to "<span class='glyphicon glyphicon-remove'></span>".html_safe,'/',:method=>:delete %></td>
+		</tr>
+		<% end %>
+	</table>

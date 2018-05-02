@@ -1,0 +1,14 @@
+
+<div class="container">
+	
+	<h1 class="text-center">Restaurants</h1>
+	<% @restaurants.in_groups_of(3,false) do |group| %>
+	<section class="row">
+		<% group.each do |res| %>
+			<%= render partial: 'partials/restaurants/thumb', locals: {res: res} %>
+		<% end %>
+
+	</section>
+	<% end %>
+
+</div>

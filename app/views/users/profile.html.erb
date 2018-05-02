@@ -1,0 +1,45 @@
+<style type="text/css">
+	
+</style>
+
+<div class="container">
+	<h1 class="text-center">Perfil de Usuario</h1>
+	<div class="row">
+		<div class="col-sm-4">
+			<h2>Datos Personales</h2>
+			<%= form_for @user, :url=>url_for(:controller=>'users',:action=>'update') do |f| %>
+			<div class="form-group">
+				<%= f.label :nombre %>
+				
+				<%= f.text_field :nombre,:class=>'form-control' %>
+				
+				
+			</div>
+			<div class="form-group">
+				<%= f.label :direccion,'Dirección' %>
+				<div class="input-group">
+					<%= f.text_field :direccion,:class=>'form-control',:id=>'gmaps-direccion' %>
+					<div class="input-group-btn">
+						<button type='button' id='search' class="btn btn-default"><span class='glyphicon glyphicon-search'></span></button>
+					</div>
+				</div>
+				<%= f.hidden_field :lat,:class=>'form-control',:id=>'lat' %>
+				<%= f.hidden_field :long,:class=>'form-control',:id=>'long' %>
+			</div>
+			<div class="form-group">
+				<%= f.label :cep %>
+				<%= f.text_field :cep,:class=>'form-control',:id=>"cep" %>
+			</div>
+			<div class="form-group">
+				<%= f.submit %>
+			</div>
+			<% end %>
+		</div>
+		<div class="col-sm-4">
+			<div id="map"></div>
+		</div>
+	</div>
+</div>
+
+
+<script src="http://maps.google.com/maps/api/js?key=AIzaSyCWnQgHanCgGlxJ5vGHKoHywQUCq8Yum9A&callback=initMap&libraries=places"></script>

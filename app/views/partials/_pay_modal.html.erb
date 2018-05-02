@@ -1,0 +1,128 @@
+<script type="text/javascript">
+	function placeorder(){
+		data={
+			order:{
+				restaurant_id: <%= @order.restaurant.id %>,
+				details_attributes:[]
+			},
+			authenticity_token:window._token
+		}
+		console.log(data)
+		var x=data.order.details_attributes
+		var rows=$('#order-table tr:not(:first)');
+		rows.each(function(){
+			var qty=$(this).find('td.detail-qty').data('value')
+			var dish_id=$(this).find('td.detail-dish').data('value')
+			var adds=$(this).find('td.detail-additionals').data('value')
+			x.push({dish_id:dish_id,qty:qty,additionals_attributes:adds})
+		})
+		data.order.payment_type=$('#order-payment_type').val()
+		if(data.order.payment_type=='dinheiro'){
+			data.order.change=$('#payway-value').val()
+		}
+		else{
+			data.order.change=0
+		}
+
+
+		$.post('/orders',data,function(data){
+			window.location.href = '/orders/'+data.id
+		},"JSON")
+	}
+
+	function payment_handler(){
+		if($('#order-payment_type').val()=='dinheiro'){
+			$('#payway label').text('Troco para:')
+			$('#payway').html(`
+				<label>Troco para:</label>
+				<input class="form-control input-sm" type="number" min="1" value="1" id="payway-value">
+				`)
+		}
+		else{
+			$('#payway label').text('Seleccione su tarjeta:')
+			$('#payway').html(`
+				<label>Tarjeta:</label>
+				<select class="form-control input-sm"  id="payway-value">
+				<option selected disabled>Seleccione...</option>
+				<option value='visa'>Visa</option>
+				<option value='master'>Master Card</option>
+				<option value='ae'>American Express</option>
+				</select>
+				`)
+		}
+	}
+</script>
+<div class="modal-header">
+	<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<h4 class="modal-title" id="myModalLabel">Confirmar Orden</h4>
+</div>
+<div class='row'>
+	<div class="modal-body">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-sm-12">
+					<table class="table table-bordered" id='order-table'>
+						<tr>
+							<th>Cantidad</th>
+							<th>Descripcion</th>
+							<th>Adicionales</th>
+							<th>Subtotal</th>
+							<th>Observaciones</th>
+						</tr>
+						<% st=0 %>
+						<% @order.details.each do |detail| %>
+
+						<tr>
+							<td class='detail-qty' data-value="<%= detail.qty %>"><%= detail.qty %></td>
+							<td class='detail-dish' data-value="<%=detail.dish.id %>"><%= detail.dish.nombre %></td>
+							<td class='detail-additionals' data-value="<%= detail.additionals.map { |f| {'addon_id'=>f.addon.id} }.to_json %>"><%= detail.additionals.map { |f| f.addon.ingredient.nombre }.join(',') %></td>
+							<td><%= detail.calculate_price %></td>
+							<td><%= detail.comment %></td>
+							<% st=st+detail.calculate_price %>
+						</tr>
+						<% end %>
+						<tr>
+							<th colspan='4' class='text-right'>Subtotal:</th>
+							<th><%= st %></th>
+						</tr>
+						<tr>
+							<th colspan='4' class='text-right'>Costo Envio:</th>
+							<th><%= @price %></th>
+						</tr>
+						<tr>
+							<th colspan='4' class='text-right'>Total a Cancelar:</th>
+							<th><%= @price+st %></th>
+						</tr>
+					</table>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-6">
+					<div class="form-group">
+						<label>Metodo de pago:</label>
+						<select id='order-payment_type' class='form-control input-sm' onchange='payment_handler()'>
+							<option selected disabled>Seleccione...</option>
+							<option value='dinheiro'>Dinheiro</option>
+							<option value='debito'>Debito</option>
+						</select>
+					</div>
+
+				</div>
+				<div class="col-sm-6" style='display:hidden'>
+					<div class="form-group" id='payway'>
+
+
+					</div>
+
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal-footer">
+	<div class="form-group">
+		<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+		<button class='btn btn-success' onclick='placeorder()'>Pagar</button>
+	</div>
+</div>

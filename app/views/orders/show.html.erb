@@ -1,0 +1,62 @@
+<script type="text/javascript">
+	$(document).on('turbolinks:load',function(){
+		//contador=setInterval(function(){getdata()},5000)
+
+		
+	})
+	/*
+	function getdata(){
+		console.log('counting')
+		id=$('#order_id').val()
+
+		$.get('/orders/status/'+id,function(data){
+			if($('#status-img').attr('src')!='/media/'+data){
+				$('#status-img').hide('slow',function(){
+					$('#status-img').attr('src','/media/'+data)
+				})
+				
+				$('#status-img').show('slow')
+			}
+		},'text')
+
+	}
+	*/
+</script>
+<input type="hidden" id='order_id' value="<%= @order.id %>">
+<div class="container">
+	<h1 class="text-center">Orden #<%= @order.id %></h1>
+
+	<div class="row">
+		<div class="col-sm-6">
+			<table class="table table-bordered table-condensed" id='order-table'>
+				<tr>
+					<th>Cantidad</th>
+					<th>Descripcion</th>
+					<th>Adicionales</th>
+					<th>Observaciones</th>
+					<th>Subtotal</th>
+					
+				</tr>
+				<% st=0 %>
+				<% @order.details.each do |detail| %>
+				<% st=st+detail.calculate_price %>
+				<tr>
+					<td class='detail-qty' data-value="<%= detail.qty %>"><%= detail.qty %></td>
+					<td class='detail-dish' data-value="<%=detail.dish.id %>"><%= detail.dish.nombre %></td>
+					<td class='detail-additionals' data-value="<%= detail.additionals.map { |f| {'addon_id'=>f.addon.id} }.to_json %>"><%= detail.additionals.map { |f| f.addon.ingredient.nombre }.join(',') %></td>
+					<td><%= detail.comment %></td>
+					<td><%= detail.calculate_price %></td>
+					
+				</tr>
+				<% end %>
+				<tr><th class='text-right' colspan='4'>SubTotal</th><th><%= st %></th></tr>
+				<tr><th class='text-right' colspan='4'>Costo de envio</th><th><%= @price %></th></tr>
+				<tr><th class='text-right' colspan='4'>Total</th><th><%= @price+st %></th></tr>
+				<tr><th class='text-right' colspan='4'>Metodo de Pago:</th><th><%= @order.payment_type %></th></tr>
+			</table>
+		</div>
+		<div class="col-sm-6">
+				<img id='status-img' src="/media/cooking.gif">
+		</div>
+	</div>
+</div>

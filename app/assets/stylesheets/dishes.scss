@@ -1,0 +1,69 @@
+// Place all the styles related to the Home controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+.dish-thumbnail{
+	border:lightgrey 1px solid;
+	border-radius:0px;
+	padding:0px;
+	box-shadow:2px 2px gray;
+	cursor:pointer;
+	.tn-image{
+		padding:0px;
+		height:100%;
+		background-color:blue;
+	}
+	img{
+		width:100%;		
+		height:100%;
+	}
+	.tn-body{
+		height:100%;
+	}
+	.restaurant-title{
+		font-weight:bold;
+		margin-bottom:0px
+	}
+	.restaurant-text{
+		margin-bottom:0px;
+		font-size:0.9em;
+	}
+
+	.container-fluid{
+		:hover{
+			background-color:lightgray;
+		}
+		:active{
+			top:2px;
+			left:2px;
+		}
+	}
+
+	
+	
+}
+
+.cart-detail{
+	.list-group-item{
+		.item-name{
+			font-weight:bold;
+			font-size:0.9em;
+			margin-bottom:1px;
+		}
+		.item-adds{
+			font-size:0.7em;
+			margin-bottom:2px;
+		}
+		.glyphicon-remove{
+			background:darkred;
+			color:white;
+			border:2px solid White;
+			position:absolute;
+			top:-10px;
+			right:-10px;
+			padding:5px;
+			border-radius:150px;
+		}
+
+	}
+	
+}

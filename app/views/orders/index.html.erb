@@ -1,0 +1,14 @@
+<div class="container">
+	<table class="table table-rows">
+		<tr><th>Orden #</th><th>Fecha</th><th>Restaurant</th><th>Status</th></tr>
+		<% @orders.each do |order| %>
+		<tr>
+			<td><%= order.id %></td>
+			<td><%= order.created_at.strftime("%d-%m-%Y %T") %></td>
+			<td><%= order.restaurant.nombre %></td>
+			<td><%=order_status order.status %></td>
+
+		</tr>
+		<% end %>
+	</table>
+</div>

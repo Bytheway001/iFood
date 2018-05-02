@@ -1,0 +1,32 @@
+
+<div class="container">
+	<h1 class="text-center">Orden N° <%= @order.id %></h1>
+
+	<div class="row">
+		<div class="col-sm-4">
+			<ul class="list-group">
+				<li class="list-group-item">Restaurant: <%= @order.restaurant.nombre %></li>
+				<li class="list-group-item">Cliente: <%= @order.user.nombre %></li>
+				<li class="list-group-item">Status: <%= @order.status %></li>
+				<li class="list-group-item">Total: <%= @order.subtotal %></li>
+				<li class="list-group-item">Costo de entrega: <%= @order.calcular_flete() %></li>
+			</ul>
+		</div>
+		<div class="col-sm-8">
+			<h2 class="text-center">Detalles</h2>
+			<table class="table table-bordered">
+				<tr><th>Cantidad</th><th>Plato</th><th>Adicionales</th><th>Comentarios</th></tr>
+				<% @order.details.each do |detail| %>
+					<tr>
+						<td><%= detail.qty %></td>
+						<td><%= detail.dish.nombre %></td>
+						<td><%= detail.additionals.collect{|i| i.addon.ingredient.nombre}.join(',') %></td> 
+						<td><%= detail.comment %></td> 
+					</tr>
+				<% end %>
+			</table>
+			<%= link_to 'Solicitar Entrega', '#',:class=>"btn btn-success" %>
+			<%= link_to 'Entregar', users_order_ready_path(@order),:class=>"btn btn-success" %>
+		</div>
+	</div>
+</div>
